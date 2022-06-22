@@ -2,6 +2,7 @@ let nodes = []
 let selected_nodes = []
 let n_selected_nodes = 3
 let teams = []
+let index_active = 0
 
 function setup() {
 	noCanvas()
@@ -34,12 +35,10 @@ function setup_nodes() {
 	nodes.push(new Node('Allgemeinwissen', 'An welchem Tag feiert man in Deutschland den Tag der Arbeit?', '1. Mai'))
 	nodes.push(new Node('Allgemeinwissen', 'Wie lautet das Ergebnis, wenn man die gegenüberliegenden Augenzahlen eines Würfels addiert?', '7'))
 	nodes.push(new Node('Allgemeinwissen', 'Wie hoch ist die Richtgeschwindigkeit auf deutschen Autobahnen?', '130 km/h'))
-	nodes.push(new Node('Allgemeinwissen', 'Wie viele Löcher hat ein Billardtisch?', '6'))
 	nodes.push(new Node('Allgemeinwissen', 'Wie nennt man unerwünschte Werbung per E-Mail?', 'Spam'))
 	nodes.push(new Node('Allgemeinwissen', 'Wie nennt man das Entladen eines Schiffes?', 'löschen'))
 	nodes.push(new Node('Allgemeinwissen', 'Wovor hat jemand Angst, der unter Arachnophobie leidet?', 'Spinnen'))
 	nodes.push(new Node('Allgemeinwissen', 'Wie heißt das höchste Blatt beim Pokern?', 'Royal Flush'))
-	// nodes.push(new Node('Allgemeinwissen', 'Welches Metall wird traditionell am Silvesterabend zur Zukunftsdeutung gegossen?', 'Blei'))
 	nodes.push(new Node('Allgemeinwissen', 'Wie heißt das Büro des Präsidenten der USA im Weißen Haus?', 'Oval Office'))
 	nodes.push(new Node('Allgemeinwissen', 'Was wird mit der Richterskala gemessen?', 'Erdbeben'))
 	nodes.push(new Node('Allgemeinwissen', 'Wie wird ein zerfallendes Bauwerk genannt?', 'Ruine'))
@@ -70,6 +69,7 @@ function setup_nodes() {
 	nodes.push(new Node('Sport', 'Wie lang ist ein Marathon?', '42 km'))
 	nodes.push(new Node('Sport', 'Wie nennt man beim Bowling das komplette Abräumen aller zehn Pins mit einem Wurf?', 'Strike'))
 	nodes.push(new Node('Sport', 'Wie nennt sich die Hartgummischeibe beim Eishockey?', 'Puck'))
+	nodes.push(new Node('Sport', 'Wie viele Löcher hat ein Billardtisch?', '6'))
 
 	// Tiere
 	nodes.push(new Node('Tiere', 'Wie heißt das größte Tier der Welt?', 'Blauwal'))
@@ -201,6 +201,9 @@ function display_teams() {
 		div_card_team = createDiv()
 		div_card_team.class('card')
 		div_card_team.parent(div_column)
+		if (i == index_active) {
+			div_card_team.addClass('active')
+		}
 
 		header = createElement('h1', teams[i].name)
 		header.parent(div_card_team)
@@ -237,7 +240,7 @@ function display_selected_questions() {
 	div_row = createDiv()
 	div_row.class('row')
 
-	for (let i = 0; i < n_selected_nodes; i++){
+	for (let i = 0; i < selected_nodes.length; i++){
 		div_column = createDiv()
 		div_column.addClass('column')
 		div_column.addClass('column' + str(n_selected_nodes))
@@ -257,7 +260,11 @@ function display_selected_questions() {
 			display_question(selected_nodes[i])
 			display_divider()
 			display_teams()
-			selected_nodes[i] = nodes.pop()
+			if (nodes.length){
+				selected_nodes[i] = nodes.pop()
+			}else{
+				selected_nodes.splice(i, 1)
+			}
 		})
 	}
 }
@@ -288,6 +295,7 @@ function display_question(node) {
 		button_display_selected_nodes = createButton('weiter')
 		button_display_selected_nodes.parent(div_card_question)
 		button_display_selected_nodes.mousePressed(function() {
+			index_active = (index_active + 1) % teams.length
 			removeElements()
 			display_selected_questions()
 			display_divider()

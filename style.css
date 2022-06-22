@@ -96,3 +96,7 @@ button:hover {
   background-color: #E5E5E5;
   overflow-wrap: break-word;
 }
+
+.active {
+  background-color: #FCA311;
+}
