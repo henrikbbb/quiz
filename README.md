@@ -1,3 +1,3 @@
-# quiz
+# Quiz
 
 https://henrikbbb.github.io/quiz/
