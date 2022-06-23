@@ -2,7 +2,7 @@ let nodes = []
 let selected_nodes = []
 let n_selected_nodes = 3
 let teams = []
-let index_active = 0
+let index_active = -1
 
 function setup() {
 	noCanvas()
@@ -178,6 +178,7 @@ function display_add_teams() {
 	button_start_game = createButton('Spiel starten')
 	button_start_game.parent(div_card_add_team)
 	button_start_game.mousePressed(function() {
+		index_active = int(random()*10000)
 		removeElements()
 		display_selected_questions()
 		display_divider()
@@ -201,7 +202,7 @@ function display_teams() {
 		div_card_team = createDiv()
 		div_card_team.class('card')
 		div_card_team.parent(div_column)
-		if (i == index_active) {
+		if (index_active >= 0 && i == (index_active % teams.length)) {
 			div_card_team.addClass('active')
 		}
 
@@ -295,7 +296,7 @@ function display_question(node) {
 		button_display_selected_nodes = createButton('weiter')
 		button_display_selected_nodes.parent(div_card_question)
 		button_display_selected_nodes.mousePressed(function() {
-			index_active = (index_active + 1) % teams.length
+			index_active += 1
 			removeElements()
 			display_selected_questions()
 			display_divider()

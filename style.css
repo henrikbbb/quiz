@@ -57,7 +57,7 @@ button:hover {
 }
 
 .column3 {
-  width: 33%;
+  width: 33.33%;
 }
 
 .column4 {
@@ -69,11 +69,11 @@ button:hover {
 }
 
 .column6 {
-  width: 16%;
+  width: 16.66%;
 }
 
 .column7 {
-  width: 14%;
+  width: 14.28%;
 }
 
 /* Remove extra left and right margins, due to padding */
