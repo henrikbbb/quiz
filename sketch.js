@@ -152,8 +152,7 @@ function setup_nodes() {
 	}
 
 	for (let i = 0; i < n_selected_nodes; i++){
-		node = nodes.pop()
-		selected_nodes.push(node)
+		add_new_selected_node(i)
 	}
 }
 
@@ -169,7 +168,7 @@ function display_title(do_animation=false) {
 	div_card_title = createDiv()
 	div_card_title.class('card')
 
-	header_title = createElement('h1', 'Titel')
+	header_title = createElement('h1', 'Herr Brandtners Quiz')
 	header_title.parent(div_card_title)
 
 	if (do_animation) {
@@ -196,6 +195,9 @@ function display_add_teams() {
 	button_add_team = createButton('Team hinzufügen')
 	button_add_team.parent(div_card_add_team)
 	button_add_team.mousePressed(function() {
+		if (input.value().length == 0) {
+			return
+		}
 		team = new Team(input.value())
 		teams.push(team)
 		removeElements()
@@ -216,7 +218,7 @@ function display_start_game() {
 	button_start_game = createButton('Spiel starten')
 	button_start_game.parent(div_card_start_game)
 	button_start_game.mousePressed(function() {
-		index_active = int(random()*10000)
+		index_active = int(random()*teams.length)
 		removeElements()
 		display_selected_nodes()
 		display_divider()
@@ -289,7 +291,7 @@ function display_selected_nodes() {
 	for (let i = 0; i < selected_nodes.length; i++){
 		div_column = createDiv()
 		div_column.addClass('column')
-		div_column.addClass('column' + str(n_selected_nodes))
+		div_column.addClass('column' + str(selected_nodes.length))
 		div_column.parent(div_row)
 
 		div_card_selected_node = createDiv()
@@ -307,11 +309,7 @@ function display_selected_nodes() {
 			display_question(selected_nodes[i])
 			display_divider()
 			display_teams()
-			if (nodes.length){
-				selected_nodes[i] = nodes.pop()
-			}else{
-				selected_nodes.splice(i, 1)
-			}
+			add_new_selected_node(i)
 		})
 	}
 }
@@ -353,6 +351,32 @@ function display_question(node) {
 			display_teams()
 		})
 	})
+}
+
+function add_new_selected_node(i) {
+	selected_nodes.splice(i, 1)
+
+
+	if (nodes.length){
+		selected_categories = new Set()
+		for (let selected_node of selected_nodes) {
+			selected_categories.add(selected_node.category)
+		}
+
+		let index_new_node = 0
+
+		for (let j = 0; j < nodes.length; j++) {
+			if (selected_categories.has(nodes[j].category)) {
+				continue
+			}
+			index_new_node = j
+			break
+		}
+
+		new_node = nodes.splice(index_new_node, 1)[0]
+
+		selected_nodes.splice(i, 0, new_node)
+	}
 }
 
 function animate(element, animation){
