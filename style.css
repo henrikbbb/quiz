@@ -22,14 +22,19 @@ img {
 button {
   font-size: 20px;
   border-radius: 10px;
-  background-color: E5E5E5;
+  background-color: #E5E5E5;
   color: black;
-  border: 2px solid #FCA311;
+  border: 2px solid #14213D;
   transition-duration: 0.3s;
 }
 
 button:hover {
   background-color: #FCA311;
+}
+
+input[type=text] {
+  border-radius: 10px;
+  font-size:24px;
 }
 
 .points_row {
@@ -99,4 +104,8 @@ button:hover {
 
 .active {
   background-color: #FCA311;
+}
+
+.divider {
+  background-color: #666666;
 }

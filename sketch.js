@@ -9,6 +9,8 @@ function setup() {
 
 	setup_nodes()
 
+	display_title(true)
+	display_divider()
 	display_add_teams()
 }
 
@@ -55,11 +57,19 @@ function setup_nodes() {
 	nodes.push(new Node('Film & Fernsehen', 'Wie heißt das Haus von Pippi Langstrumpf?', 'Villa Kunterbunt'))
 	nodes.push(new Node('Film & Fernsehen', 'Wie heißt der Hund von Obelix?', 'Idefix'))
 	nodes.push(new Node('Film & Fernsehen', 'In welcher TV-Straße wohnen Elmo und Graf Zahl?', 'Sesamstraße'))
+	nodes.push(new Node('Film & Fernsehen', 'Wie heißt dieser Moderator?', 'Kai Pflaume', 'https://i.postimg.cc/L6cfqzQT/kai-pflaume.jpg'))
+	nodes.push(new Node('Film & Fernsehen', 'Wie heißt dieser Komiker?', 'Teddy Teclebrhan', 'https://i.postimg.cc/4nk6TtrB/teddy.jpg'))
+	nodes.push(new Node('Film & Fernsehen', 'Wie heißt diese Komikerin?', 'Carolin Kebekus', 'https://i.postimg.cc/pdX17bQy/carolin-kebekus.jpg'))
+	nodes.push(new Node('Film & Fernsehen', 'Wie heißt dieser Film?', 'Avatar', 'https://i.postimg.cc/cLRqfVw6/avatar.jpg'))
+	nodes.push(new Node('Film & Fernsehen', 'Wie heißt dieser Film?', 'Herr der Ringe', 'https://i.postimg.cc/vBcb70Gj/herr-der-ringe.jpg'))
+	nodes.push(new Node('Film & Fernsehen', 'Wie heißt dieser Film?', 'Titanic', 'https://i.postimg.cc/rmBX1cn0/titanic.jpg'))
 
 	// Musik
 	nodes.push(new Node('Musik', 'Wer komponierte "Eine kleine Nachtmusik"?', 'Wolfgang Amadeus Mozart'))
 	nodes.push(new Node('Musik', 'Welche schwedische Band veröffentlichte 2021 nach 40 Jahren Pause das Album "Voyage"?', 'ABBA'))
 	nodes.push(new Node('Musik', 'Welche Sängerin singt das Lied "Atemlos durch die Nacht"?', 'Helene Fischer'))
+	nodes.push(new Node('Musik', 'Wie heißt dieser Komponist?', 'Ludwig van Beethoven', 'https://i.postimg.cc/sDcGwtTM/Beethoven.jpg'))
+	nodes.push(new Node('Musik', 'Wie heißt dieser Musiker?', 'Harry Styles', 'https://i.postimg.cc/63JCDCnq/harry-styles-217668.jpg'))
 
 	// Sport
 	nodes.push(new Node('Sport', 'Welches Land wurde 2018 im Herrenfußball Weltmeister?', 'Frankreich'))
@@ -102,10 +112,12 @@ function setup_nodes() {
 	// Geschichte
 	nodes.push(new Node('Geschichte', 'In welchem Jahr sank die Titanic?', '1912'))
 	nodes.push(new Node('Geschichte', 'In welchem Jahr war die erste Mondlandung?', '1969'))
+	nodes.push(new Node('Geschichte', 'In welchem Jahr war der Mauerfall?', '1989'))
 
 	// Kunst
 	nodes.push(new Node('Kunst', 'Wer hat die Mona Lisa gemalt?', 'Leonardo Da Vinci'))
 	nodes.push(new Node('Kunst', 'Wie nennt man gesprayte Kunstwerke?', 'Graffiti'))
+	nodes.push(new Node('Kunst', 'Wer hat dieses Bild gemalt?', 'Vincent van Gogh', 'https://i.postimg.cc/D0yNVV3x/Van-Gogh-Starry-Night-Google-Art-Project.jpg'))
 
 	// Weltraum
 	nodes.push(new Node('Weltraum', 'Wie heißt der größte Planet im Sonnensystem?', 'Jupiter'))
@@ -115,6 +127,7 @@ function setup_nodes() {
 	// Chemie
 	nodes.push(new Node('Chemie', 'Was ist H2O?', 'Wasser'))
 	nodes.push(new Node('Chemie', 'Womit werden Luftballons gefüllt, damit sie fliegen?', 'Helium'))
+	nodes.push(new Node('Chemie', 'Wie nennt man dieses Gerät?', 'Bunsenbrenner', 'https://i.postimg.cc/cJm9XWFk/bunsenbrenner.png'))
 
 	// Märchen
 	nodes.push(new Node('Märchen', 'In was wird die Hexe von Gretel in dem Märchen Hänsel und Gretel geschubst?', 'Ofen'))
@@ -124,10 +137,19 @@ function setup_nodes() {
 
 	// Religion
 	nodes.push(new Node('Religion', 'Wer übersetzte als Erster die Bibel ins Deutsche?', 'Martin Luther'))
+	nodes.push(new Node('Religion', 'Wie viele Weltreligionen gibt es?', '5'))
 
 	console.log(nodes.length)
 
 	nodes = nodes.sort(() => Math.random() - 0.5)
+
+	for (let i = 0; i < 1000; i++){
+		a = int(random()*nodes.length)
+		b = int(random()*nodes.length)
+		temp = nodes[a]
+		nodes[a] = nodes[b]
+		nodes[b] = temp
+	}
 
 	for (let i = 0; i < n_selected_nodes; i++){
 		node = nodes.pop()
@@ -138,16 +160,29 @@ function setup_nodes() {
 function display_divider() {
 	br = createElement('br')
 	div_card_divider = createDiv()
-	div_card_divider.class('card')
+	div_card_divider.addClass('card')
+	div_card_divider.addClass('divider')
 	br = createElement('br')
+}
+
+function display_title(do_animation=false) {
+	div_card_title = createDiv()
+	div_card_title.class('card')
+
+	header_title = createElement('h1', 'Titel')
+	header_title.parent(div_card_title)
+
+	if (do_animation) {
+		animate(header_title, 'animate__jackInTheBox')
+	}
 }
 
 function display_add_teams() {
 	div_card_add_team = createDiv()
 	div_card_add_team.class('card')
 
-	header = createElement('h1', 'Teams')
-	header.parent(div_card_add_team)
+	header_add_team = createElement('h1', 'Teams')
+	header_add_team.parent(div_card_add_team)
 
 	input = createInput('')
 	input.parent(div_card_add_team)
@@ -164,27 +199,29 @@ function display_add_teams() {
 		team = new Team(input.value())
 		teams.push(team)
 		removeElements()
+		display_title()
+		display_divider()
 		display_add_teams()
 		display_divider()
 		display_teams()
+		display_divider()
+		display_start_game()
 	})
+}
 
-	br = createElement('br')
-	br.parent(div_card_add_team)
-
-	br = createElement('br')
-	br.parent(div_card_add_team)
+function display_start_game() {
+	div_card_start_game = createDiv()
+	div_card_start_game.class('card')
 
 	button_start_game = createButton('Spiel starten')
-	button_start_game.parent(div_card_add_team)
+	button_start_game.parent(div_card_start_game)
 	button_start_game.mousePressed(function() {
 		index_active = int(random()*10000)
 		removeElements()
-		display_selected_questions()
+		display_selected_nodes()
 		display_divider()
 		display_teams()
 	})
-
 }
 
 function display_teams() {
@@ -237,7 +274,15 @@ function display_teams() {
 	}
 }
 
-function display_selected_questions() {
+function display_selected_nodes() {
+	div_card_info = createDiv()
+	div_card_info.class('card')
+
+	p_info = createP(teams[index_active % teams.length].name + ', wählt eine Kategorie aus.')
+	p_info.parent(div_card_info)
+
+	display_divider()
+
 	div_row = createDiv()
 	div_row.class('row')
 
@@ -251,8 +296,9 @@ function display_selected_questions() {
 		div_card_selected_node.class('card')
 		div_card_selected_node.parent(div_column)
 
-		header = createElement('h1', selected_nodes[i].category)
-		header.parent(div_card_selected_node)
+		header_selected_node = createElement('h1', selected_nodes[i].category)
+		header_selected_node.parent(div_card_selected_node)
+		animate(header_selected_node, 'animate__zoomIn')
 
 		button_select_node = createButton('auswählen')
 		button_select_node.parent(div_card_selected_node)
@@ -279,10 +325,13 @@ function display_question(node) {
 
 	p_question = createP(node.question)
 	p_question.parent(div_card_question)
+	animate(p_question, 'animate__zoomIn')
 
 	if (node.image_url) {
 		img = createImg(node.image_url)
 		img.parent(div_card_question)
+		animate(img, 'animate__zoomIn')
+
 		br = createElement('br')
 		br.parent(div_card_question)
 	}
@@ -293,16 +342,25 @@ function display_question(node) {
 		button_display_answer.remove()
 		p_answer = createP(node.answer)
 		p_answer.parent(div_card_question)
+		animate(p_answer, 'animate__zoomIn')
 		button_display_selected_nodes = createButton('weiter')
 		button_display_selected_nodes.parent(div_card_question)
 		button_display_selected_nodes.mousePressed(function() {
 			index_active += 1
 			removeElements()
-			display_selected_questions()
+			display_selected_nodes()
 			display_divider()
 			display_teams()
 		})
 	})
+}
+
+function animate(element, animation){
+	element.addClass('animate__animated  ' + animation)
+	let wait = setTimeout(function(){
+		element.removeClass('animate__animated')
+		element.removeClass(animation)
+	}, 1000)
 }
 
 class Node {
